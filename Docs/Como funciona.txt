@@ -1,0 +1,69 @@
+1 - Importa as bibliotecas cv2, mediapipe e numpy.
+
+2 - Declara o frame que será capturado do feed de vídeo pela câmera.
+
+3 - Define o objeto face_mesh para ser utilizado ao longo do programa.
+
+4 - Declara os landmarks padrão para o nariz e os olhos, onde o nariz será o ponto de aplicação da máscara, e os olhos servirão como referência para cálculos de distância e rotação.
+
+5 - Função que calcula a distância euclidiana entre dois pontos capturados pela câmera. Funciona da seguinte maneira: ela recebe as tuplas de coordenadas (x1, y1) e (x2, y2), calcula a diferença entre as coordenadas, eleva os valores ao quadrado para evitar negativos, aplica o teorema de Pitágoras e usa a função sqrt do NumPy para calcular a raiz quadrada, retornando a distância desejada.
+
+6 - Função que calcula o ângulo entre dois pontos conectados, p1 e p2, e o eixo x. Cada tupla representa um plano cartesiano com coordenadas x e y. A função calcula a variação vertical (delta_y) e a variação horizontal (delta_x) e converte o ângulo de radianos para graus.
+
+7 - Função que calcula o valor médio das coordenadas x e y passadas pelos landmarks faciais. Ela coleta todos os valores de x e y, calcula a média e retorna um único valor que representa a posição central do nariz na imagem.
+
+8 - Função que ajusta o tamanho da máscara com base na distância da câmera. Utilizando a função de cálculo de distância, ela compara a distância atual com a do frame anterior e redimensiona a imagem da máscara para se adequar ao novo tamanho do rosto.
+
+9 - Calcula a posição central da máscara dividindo as dimensões de y e x da imagem pela metade. Cria uma matriz de rotação para rotacionar a imagem usando o centro como ponto de pivô, com o ângulo de rotação sendo negativo para girar no sentido horário. Aplica uma transformação afim na máscara redimensionada usando o método de interpolação bilinear para otimização de qualidade.
+
+10 - Separa o canal alfa da imagem, deixando apenas os canais BGR para garantir que a imagem não fique transparente.
+
+11 - Função que calcula o deslocamento para posicionar a máscara em relação às coordenadas do nariz. Isso é usado para centralizar a máscara no nariz dividindo sua largura e altura pela metade e, em seguida, subtraindo e sobrepondo na posição do nariz.
+
+12 - Função que impede a máscara de sair das bordas da imagem, evitando erros no script. Ela garante que os valores não sejam menores que 0 e que a máscara não ultrapasse a largura ou altura da imagem.
+
+13 - Função que extrai a sub-região desejada da imagem onde a máscara será aplicada. Depois, extrai o canal alfa dessa sub-região e normaliza seus valores de transparência.
+
+14 - Importa e carrega a imagem da máscara com o canal alfa.
+
+15 - Configura o detector FaceMesh com o número máximo de rostos a serem detectados, a confiança de detecção do que é ou não um rosto e a confiança dos landmarks sobre o que é ou não um ponto.
+
+16 - Inicia o loop para captura de vídeo e execução das funções.
+
+17 - Converte a imagem para o formato RGB.
+
+18 - Processa os landmarks faciais usando o FaceMesh do MediaPipe.
+
+19 - Converte a imagem de volta para o formato BGR.
+
+20 - Verifica se os landmarks faciais foram detectados.
+
+21 - Converte a imagem para escala de cinza quando um rosto é detectado.
+
+22 - Faz um loop por cada rosto detectado.
+
+23 - Obtém as coordenadas do rosto e o formato da imagem.
+
+24 - Coleta todos os landmarks do rosto.
+
+25 - Converte as coordenadas normalizadas para pixels.
+
+26 - Faz um loop por todos os landmarks.
+
+27 - Define as coordenadas de referência para distância e ângulo.
+
+28 - Obtém os landmarks dos cantos dos olhos para calcular a distância de perspectiva da imagem.
+
+29 - Calcula o ângulo com base nos landmarks de referência (olhos) para rotacionar a imagem.
+
+30 - Ajusta a escala com base na distância entre os olhos.
+
+31 - Obtém os landmarks do nariz para posicionar a máscara, comparando com os landmarks do nariz.
+
+32 - Aplica a máscara com rotação e escala baseando-se nos landmarks do nariz.
+
+33 - Exibe a imagem com a máscara.
+
+34 - Encerra o loop e fecha a janela ao pressionar 'q'.
+
+35 - Libera a captura de vídeo e fecha a janela quando o loop termina.

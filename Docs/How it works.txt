@@ -1,0 +1,71 @@
+1 - Imports cv2, mediapipe, and numpy.
+
+2 - Declares the frame that will be captured from the video feed by the camera.
+
+3 - Names the face_mesh object so it can be used throughout the program.
+
+4 - Declares the default landmark positions for the nose and eyes, with the nose being the position where the mask will be applied and the eyes serving as reference points for distance and rotation calculations.
+
+5 - A function calculates the Euclidean distance between two points captured by the camera. It works as follows: First, it receives the coordinate tuples (x1, y1) and (x2, y2). It then calculates the difference between the coordinates, squares the values to avoid negatives, applies the Pythagorean theorem, and uses NumPy’s sqrt function to compute the square root, yielding the desired distance.
+
+6 - A function calculates the angle between two connected points, p1 and p2, and the x-axis. Each tuple represents a Cartesian plane with x and y coordinates. The function computes the vertical variation (delta_y) and horizontal variation (delta_x) and then converts the angle from radians to degrees.
+
+7 - A function calculates the average value of the x and y coordinates passed by the facial landmarks. It collects all x and y values and calculates their average, resulting in a single value representing the nose's central position in the image.
+
+8 - A function adjusts the mask size based on the distance from the camera. Using the distance calculation function, it compares the current distance to the previous frame and resizes the mask image to fit the new face size.
+
+9 - First, the mask's central position is calculated by dividing the y and x dimensions of the shape by 2. Additionally, a rotation_matrix is created to rotate the image, using the center as the pivot point. The rotation angle is negative for clockwise rotation, and a scale factor of 1 ensures the image is not resized. Next, an affine transformation is applied to the resized mask, using the input image, the transformation matrix, the output image size (which should be the same), and the interpolation method for quality optimization, specifically bilinear interpolation.
+
+10 - The alpha channel of the image is separated, leaving only the BGR channels to ensure the image is not transparent.
+
+11 - A function calculates the offset to position the mask relative to the nose coordinates. This is used to center the mask on the nose by dividing its width and height by 2, obtaining its center, and then subtracting and overlaying it at the nose position.
+
+12 - A function prevents the mask from moving outside the image boundaries, which could break the script. It ensures that the values are not less than 0 and that the mask does not exceed the image’s width or height.
+
+13 - Função para extrair a sub-região deseja da minha imagem em que eu devo aplicar, depois extraio o canal alpha da sub-região e normalizo o canal de transparência dele
+
+14 - A function extracts the desired sub-region of the image where the mask will be applied. It then extracts the alpha channel of the sub-region and normalizes its transparency values.
+
+15 - Import and loading the mask image with an alpha channel
+
+16 - Configuring the FaceMesh detector with Max number of faces that he can detect, the confidence detection about what is a face, and what is not a face, and the confidence of the landmarks, about what is landmark and what is not landmark.
+
+17 - Running the loop for video capture and to excute the functions
+
+18 - Converting the image to RGB
+
+19 - Processing facial landmarks, with face mesh of MediaPipe
+
+20 - Converting back to BGR
+
+21 - Checking if facial landmarks are detected
+
+22 - Converting the image to grayscale, when he find a face
+
+23 - Looping through each face
+
+24 - Getting face coordinates, and te shape of the image
+
+25 - Getting all the landmarks
+
+26 - Converting normalized coordinates to pixel coordinates
+
+27 - Looping through all the landmarks
+
+28 - Coordinates for reference distance and angle
+
+29 - Getting the landmarks for the corners of the eyes, to make the perspective distance of the image
+
+30 - Calculating the angle based on the reference landmarks (eyes), to make the rotation of the image
+
+31 - Adjusting scale based on distance between the eyes
+
+32 - Getting nose landmarks for mask placement, comparing with the nose landmarks
+
+33 - Applying the mask with rotation and scaling based on the nose landmarks
+
+34 - Displaying the image with the mask
+
+35 - Breaking the loop and closing the window when 'q' is pressed
+
+36 - Releasing the video capture and closing the window when the loop ends
