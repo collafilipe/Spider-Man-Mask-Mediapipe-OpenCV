@@ -108,10 +108,10 @@ with mp_face_mesh.FaceMesh(
         # Checking if facial landmarks are detected
         if results.multi_face_landmarks:
 
-            #22
-            # Converting the image to grayscale
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+            # #22
+            # # Converting the image to grayscale
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            # img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
             
             #23
             # Looping through each face
